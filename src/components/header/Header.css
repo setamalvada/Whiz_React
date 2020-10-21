@@ -1,0 +1,10 @@
+.Header {
+  background: rgb(85, 11, 163);
+  background: linear-gradient(
+    90deg,
+    rgba(85, 11, 163, 1) 20%,
+    rgba(245, 250, 19, 1) 80%
+  );
+  padding:10px;
+  
+}
