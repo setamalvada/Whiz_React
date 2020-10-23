@@ -1,8 +1,8 @@
-// import "./Login.css";
+//import "./Login.css";
 import React, { useState } from "react";
-import InputWithLabel from "./input-with-label/InputWithLabel";
-// import { login } from "../../services/api.service";
-// import { Redirect } from "react-router-dom";
+import InputWithLabel from "./input-with-label/InputWhithLabel";
+import { login } from "../../services/api.service";
+import { Redirect } from "react-router-dom";
 
 export default function Login({ user, onLogIn }) {
   const [email, setEmail] = useState("");
@@ -10,6 +10,7 @@ export default function Login({ user, onLogIn }) {
   const [error, setError] = useState("");
 
   const onSubmit = (e) => {
+    console.log(email)
     e.preventDefault();
     login(email, password)
       .then((user) => onLogIn(user))
@@ -17,12 +18,12 @@ export default function Login({ user, onLogIn }) {
   };
 
   if (user) {
-    return <Redirect to="/products" />;
+    return <Redirect to="/map" />;
   }
 
   return (
     <div className="Login">
-      <div>Whiz</div>
+      <div>Whiz </div>
       {error && <p>There was an error: {error}</p>}
       <form onSubmit={onSubmit}>
         <InputWithLabel

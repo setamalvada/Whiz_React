@@ -1,8 +1,11 @@
 import "./App.css";
 import React, { useState } from "react";
-// import { Redirect, Route, Switch } from "react-router-dom";
-// import Login from "./components/login/Login";
+import { Redirect, Route, Switch } from "react-router-dom";
+import Login from "./components/login/Login";
+import SignUp from "./components/sign-up/SignUp";
 import Header from "./components/header/Header";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+
 // import ProductList from "./components/product-list/ProductList";
 // import AuthenticatedRoute from "./components/authenticated-route/AuthenticatedRoute";
 
@@ -22,22 +25,35 @@ function App() {
   return (
     <div className="App">
       <Header user={user} onLogOut={onLogOut} />
-      {/* <div className="App__screenWrapper">
+      <div className="App__screenWrapper">
         <Switch>
-          <AuthenticatedRoute
+          {/* <AuthenticatedRoute
             path="/products"
             render={(props) => <ProductList {...props} user={user} onLogOut={onLogOut} />}
             user={user}
-          />
+          /> */}
+           {/* <AuthenticatedRoute
+            path="/map"
+            render={(props) => <Map {...props} user={user} onLogOut={onLogOut} />}
+            user={user}
+          /> */}
           <Route
             path="/login"
             render={(props) => (
               <Login {...props} user={user} onLogIn={onLogIn} />
             )}
           />
-          <Redirect to="/products" />
+          <MuiThemeProvider>
+          <Route
+            path="/signup"
+            render={(props) => (
+              <SignUp {...props} user={user} onLogIn={onLogIn} />
+            )}
+          />
+          </MuiThemeProvider>
+          {/* <Redirect to="/" /> */}
         </Switch>
-      </div> */}
+      </div>
     </div>
   );
 }
