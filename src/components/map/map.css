@@ -1,0 +1,16 @@
+.mapContainer {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+/* .marker {
+  background-image: url("svg/marker.svg");
+  background-size: cover;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+} */

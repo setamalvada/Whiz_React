@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import Login from "./components/login/Login";
 import SignUp from "./components/sign-up/SignUp";
 import Header from "./components/header/Header";
+import Map from "./components/map/Map";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 // import ProductList from "./components/product-list/ProductList";
@@ -15,6 +16,11 @@ function App() {
   const onLogIn = (loggedInUser) => {
     localStorage.setItem("user", JSON.stringify(loggedInUser));
     setUser(loggedInUser);
+  };
+
+  const onSignUp = (notRegisteredUser) => {
+    localStorage.setItem("user", JSON.stringify(notRegisteredUser));
+    setUser(notRegisteredUser);
   };
 
   const onLogOut = () => {
@@ -43,15 +49,19 @@ function App() {
               <Login {...props} user={user} onLogIn={onLogIn} />
             )}
           />
+           <Route 
+        path="/map"
+       component={Map}
+          />
           <MuiThemeProvider>
           <Route
             path="/signup"
             render={(props) => (
-              <SignUp {...props} user={user} onLogIn={onLogIn} />
+              <SignUp {...props} user={user} onSignUp={onSignUp} />
             )}
           />
           </MuiThemeProvider>
-          {/* <Redirect to="/" /> */}
+       
         </Switch>
       </div>
     </div>

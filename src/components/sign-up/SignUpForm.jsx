@@ -43,6 +43,13 @@ const SignUpForm = ({
           onChange={onChange}
           errorText={errors.email}
         />
+          <TextField
+          type={type}
+          name="avatar"
+          floatingLabelText="avatar"
+          value={user.avatar}
+          onChange={onChange}
+        />
         <TextField
           type={type}
           name="password"
@@ -52,19 +59,13 @@ const SignUpForm = ({
           errorText={errors.password}
         />
 
-        <TextField
-          type={type}
-          name="avatar"
-          floatingLabelText="avatar"
-          value={user.avatar}
-          onChange={onPwChange}
-        />
+      
 
-<FormLabel component="legend">Choose your faction: </FormLabel>
+{/* <FormLabel component="legend">Choose your faction: </FormLabel>
   <RadioGroup aria-label="team" name="team" value={user.team} onChange={onChange}>
     <FormControlLabel value="yellow" control={<Radio />} label="Yellow" />
     <FormControlLabel value="purple" control={<Radio />} label="Purple" />
-  </RadioGroup>
+  </RadioGroup> */}
 
         <div className="pwStrRow">
           {score >= 1 && (
@@ -93,10 +94,11 @@ const SignUpForm = ({
           type="submit"
           label="submit"
         />
+        {/* <button type="submit">Submit</button> */}
       </form>
       <p>
         Aleady have an account? <br />
-        <Redirect href="/login">Log in here</Redirect>
+        <a href="/login">Log in here</a>
       </p>
     </div>
   );
