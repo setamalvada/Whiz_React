@@ -5,10 +5,13 @@ import Login from "./components/login/Login";
 import SignUp from "./components/sign-up/SignUp";
 import Header from "./components/header/Header";
 import Map from "./components/map/Map";
+import TeamsStats from "./components/teams/TeamsStats";
+import AuthenticatedRoute from "./components/aunthenticated-route/AuthenticatedRoute";
+
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
+
 // import ProductList from "./components/product-list/ProductList";
-// import AuthenticatedRoute from "./components/authenticated-route/AuthenticatedRoute";
 
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
@@ -33,11 +36,11 @@ function App() {
       <Header user={user} onLogOut={onLogOut} />
       <div className="App__screenWrapper">
         <Switch>
-          {/* <AuthenticatedRoute
-            path="/products"
-            render={(props) => <ProductList {...props} user={user} onLogOut={onLogOut} />}
+          <AuthenticatedRoute
+            path="/team/general"
+            render={(props) => <TeamsStats {...props} user={user} onLogOut={onLogOut} />}
             user={user}
-          /> */}
+          />
            {/* <AuthenticatedRoute
             path="/map"
             render={(props) => <Map {...props} user={user} onLogOut={onLogOut} />}
@@ -53,6 +56,7 @@ function App() {
         path="/map"
        component={Map}
           />
+         
           <MuiThemeProvider>
           <Route
             path="/signup"
