@@ -7,8 +7,9 @@ import Header from "./components/header/Header";
 import Map from "./components/map/Map";
 import TeamsStats from "./components/teams/TeamsStats";
 import AuthenticatedRoute from "./components/aunthenticated-route/AuthenticatedRoute";
-
+import PurpleList from "./components/teams/TeamPurple";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import YellowList from "./components/teams/TeamYellow";
 
 
 // import ProductList from "./components/product-list/ProductList";
@@ -39,6 +40,18 @@ function App() {
           <AuthenticatedRoute
             path="/team/general"
             render={(props) => <TeamsStats {...props} user={user} onLogOut={onLogOut} />}
+            user={user}
+          />
+
+          <AuthenticatedRoute
+            path="/team/yellow"
+            render={(props) => <YellowList {...props} user={user} onLogOut={onLogOut} />}
+            user={user}
+          />
+
+          <AuthenticatedRoute
+            path="/team/purple"
+            render={(props) => <PurpleList {...props} user={user} onLogOut={onLogOut} />}
             user={user}
           />
            {/* <AuthenticatedRoute

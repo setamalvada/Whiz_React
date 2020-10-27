@@ -1,16 +1,15 @@
-import { yellowTeam } from "../../services/api.service";
-import React, { useEffect, useState} from 'react';
+import { purpleTeam } from "../../services/api.service";
+import React, { Component ,useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import UserCard from './UserCard'
-import * as V from 'victory';
-import { VictoryBar } from 'victory';
 
-export default function YellowList({ onLogOut }) {
+
+export default function PurpleList({ onLogOut }) {
     const [userList, setUserList] = useState([]);
     const [error, setError] = useState();
   
     useEffect(() => {
-      yellowTeam()      
+      purpleTeam()      
         .then((user) => setUserList(user))
         .catch((e) => {
             debugger
@@ -22,7 +21,7 @@ export default function YellowList({ onLogOut }) {
         });
     }, []);
 
-    const data =userList
+    console.log(userList)
 
 
   
@@ -34,8 +33,7 @@ export default function YellowList({ onLogOut }) {
       return <div>Loading...</div>;
     } else {
       return (
-        <div>
-        <div className="YellowList">
+        <div className="PurpleList">
           {userList.map((p) => (
             <UserCard
               key={p.id}
@@ -45,11 +43,6 @@ export default function YellowList({ onLogOut }) {
               counter={p.counter}
             />
           ))}
-        </div>
-
-      
-
-
         </div>
       );
     }

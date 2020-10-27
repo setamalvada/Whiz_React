@@ -17,6 +17,14 @@ export const signup = (username,email, password,avatar,team) => {
     return axios.get("/team/general",{ withCredentials: true } ).then((res) => res.data);
   };
 
+
+  export const yellowTeam = () => {
+    return axios.get("/team/yellow",{ withCredentials: true } ).then((res) => res.data);
+  };
+
+  export const purpleTeam = () => {
+    return axios.get("/team/purple",{ withCredentials: true } ).then((res) => res.data);
+  };
   
 
   export const listPlaces = () => {

@@ -132,7 +132,7 @@ class Map extends Component {
         this.setState({places: response})
               response.forEach(e =>{
                 // console.log(e)
-      if(e.owner === null){
+      if(e.owner === "none"){
       const place = new mapboxgl.Marker({color:"grey"}) 
     
       .setLngLat([e.location.coordinates[0],e.location.coordinates[1]])

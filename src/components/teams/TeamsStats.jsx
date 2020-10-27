@@ -1,18 +1,33 @@
-import { displayTeam } from "../../services/api.service";
-import React, { Component ,useEffect, useState} from 'react';
+import { displayTeam , listPlaces} from "../../services/api.service";
+import React, { useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import UserCard from './UserCard'
+import * as V from 'victory';
+import { VictoryBar , VictoryChart, VictoryPie} from 'victory';
+
+
+// const chartTheme = {
+//   axis: {
+//     style: {
+//       tickLabels: {
+//         // this changed the color of my numbers to white
+//         fill: 'white',
+//       },
+//     },
+//   },
+// };
 
 
 export default function TeamList({ onLogOut }) {
     const [userList, setUserList] = useState([]);
+    const [placesList, setPlacesList] = useState([]);
     const [error, setError] = useState();
   
     useEffect(() => {
       displayTeam()      
         .then((user) => setUserList(user))
         .catch((e) => {
-            debugger
+        
           if (e.response.status === 401) {
             onLogOut();
           } else {
@@ -20,6 +35,49 @@ export default function TeamList({ onLogOut }) {
           }
         });
     }, []);
+
+    useEffect(() => {
+      listPlaces()      
+        .then((place) => setPlacesList(place.map(function(x){
+          
+          return x.owner
+        })))
+        .catch((e) => {
+        
+          if (e.response.status === 401) {
+            onLogOut();
+          } else {
+            setError(true);
+          }
+        });
+    }, []);
+
+
+    const place= placesList
+
+    const yellow = place.filter(y=> y === "yellow").length
+
+    const purple = place.filter(y=> y === "purple").length
+
+    const none = place.filter(y=> y === "none").length
+
+    // console.log(none)
+    // for(let i=0; i<place.length; i++){
+    //   if(place[i] == "purple"){
+    //     place[i] = 1;
+    //   }else if(place[i] == "yellow"){
+    //     place[i] = -1;
+    //   }else {
+    //     place[i] = 2;
+    //   }
+    // }
+    
+    console.log(placesList)
+    // console.log(userList)
+    const data =userList
+    
+    console.log(none)
+
   
     if (error) {
       return <div>There was an error sending the request</div>;
@@ -29,6 +87,39 @@ export default function TeamList({ onLogOut }) {
       return <div>Loading...</div>;
     } else {
       return (
+        <div>
+          <div>Total conquers</div>
+        <VictoryChart domainPadding={100}>
+          <VictoryBar
+
+          barRatio={3}
+          data={data}
+          // data accessor for x values
+          x="team"
+          // data accessor for y values
+          y="counter"
+
+          style={{ data: { fill: data => (data.team === "yellow" ? "yellow" : "purple") } }}
+          
+          //FALLA
+
+          
+        />
+        </VictoryChart>
+
+        <VictoryPie
+        colorScale={["yellow", "purple", "grey" ]}
+        data={[
+          { x: 1, y: yellow ,label:"Yellow"},
+          { x: 2, y: purple ,label:"Purple" },
+          { x: 3, y: none ,label:"Not conquered"}
+        ]
+                
+        }
+
+        
+    
+/>
         <div className="TeamList">
           {userList.map((p) => (
             <UserCard
@@ -40,6 +131,9 @@ export default function TeamList({ onLogOut }) {
             />
           ))}
         </div>
+        
+        </div>
+        
       );
     }
   }
