@@ -1,0 +1,107 @@
+@font-face {
+  font-family: titleFont;
+  src: url(/src/);
+}
+
+h1 {
+  display: inline-block;
+  position: relative;
+  font-family: titleFont;
+  font-size: 60px;
+  margin: 40px;
+  color: rgb(88, 3, 88);
+  /* overflow: hidden; */
+}
+
+h1::after {
+  box-sizing: border-box;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /* background-color: transparent; */
+  background-color: rgb(36, 36, 36);
+  top: 0;
+  right: 0;
+  border-left: 0px solid tra;
+  animation: cursor 0.5s linear infinite, typing 3s steps(13) forwards 1;
+}
+
+h2 {
+  display: inline-block;
+  position: relative;
+  font-family: titleFont;
+  font-size: 30px;
+  margin: 40px;
+  color: yellow;
+  /* overflow: hidden; */
+}
+
+h2::after {
+  box-sizing: border-box;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /* background-color: transparent; */
+  background-color: rgb(36, 36, 36);
+  top: 0;
+  right: 0;
+  border-left: 0px solid rgb(36, 36, 36);
+  animation: cursor 0.5s linear infinite, typing 3s steps(13) forwards 1;
+  animation-delay: 3s;
+}
+
+@keyframes cursor {
+  0% {
+    border-color: black;
+  }
+  50% {
+    border-color: black;
+  }
+  65% {
+    border-color: transparent;
+  }
+  75% {
+    border-color: transparent;
+  }
+  90% {
+    border-color: black;
+  }
+  100% {
+    border-color: black;
+  }
+}
+
+@keyframes typing {
+  to {
+    width: 0;
+  }
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0.0001;
+  }
+
+  45% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0.9;
+  }
+}
+
+.fourth-text {
+  font-family: titleFont;
+  font-size: 60px;
+  position: absolute;
+  top: 75%;
+  left: 10%;
+  opacity: 0;
+  color: #ffffff;
+  animation-name: fadeInOut;
+  animation-delay: 6s;
+  animation-duration: 10s;
+}

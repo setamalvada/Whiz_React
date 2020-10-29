@@ -4,9 +4,12 @@ axios.defaults.baseURL = "http://localhost:3010";
 axios.defaults.withCredentials = true;  
 
 
-export const login = (email, password) => {
-  return axios.post("/login", { email, password }).then((res) => res.data);
-};
+const http = axios.create({
+  baseURL: "http://localhost:3010",
+  withCredentials: true
+})
+
+export const login = ({ email, password }) => http.post('/login', { email, password }).then((res) => res.data);
 
 export const signup = (username,email, password,avatar,team) => {
     return axios.post("/signup", { username,email, password,avatar,team }).then((res) => res.data);
@@ -31,6 +34,10 @@ export const signup = (username,email, password,avatar,team) => {
     return axios.get("/map").then((res) => res.data);
   };
 
+
+  export const conquer = (id) =>{
+    return axios.patch(`/map/${id}`).then((res) => res.data);
+  }
   
   
 

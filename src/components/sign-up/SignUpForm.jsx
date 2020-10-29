@@ -21,7 +21,7 @@ const SignUpForm = ({
   btnTxt,
   type,
   pwMask,
-  onPwChange
+  onPwChange,
 }) => {
   return (
     <div className="loginBox">
@@ -43,7 +43,7 @@ const SignUpForm = ({
           onChange={onChange}
           errorText={errors.email}
         />
-          <TextField
+        <TextField
           type={type}
           name="avatar"
           floatingLabelText="avatar"
@@ -59,9 +59,7 @@ const SignUpForm = ({
           errorText={errors.password}
         />
 
-      
-
-{/* <FormLabel component="legend">Choose your faction: </FormLabel>
+        {/* <FormLabel component="legend">Choose your faction: </FormLabel>
   <RadioGroup aria-label="team" name="team" value={user.team} onChange={onChange}>
     <FormControlLabel value="yellow" control={<Radio />} label="Yellow" />
     <FormControlLabel value="purple" control={<Radio />} label="Purple" />
@@ -70,14 +68,19 @@ const SignUpForm = ({
         <div className="pwStrRow">
           {score >= 1 && (
             <div>
-              <PasswordStr score={score} /> 
-              <FlatButton 
-                className="pwShowHideBtn" 
-                label={btnTxt} onClick={pwMask} 
-                style={{position: 'relative', left: '50%', transform: 'translateX(-50%)'}} 
+              <PasswordStr score={score} />
+              <FlatButton
+                className="pwShowHideBtn"
+                label={btnTxt}
+                onClick={pwMask}
+                style={{
+                  position: "relative",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                }}
               />
             </div>
-            )} 
+          )}
         </div>
         <TextField
           type={type}
@@ -86,6 +89,14 @@ const SignUpForm = ({
           value={user.repeatPassword}
           onChange={onChange}
           errorText={errors.repeatPassword}
+        />
+
+        <TextField
+          name="team"
+          floatingLabelText="team"
+          value={user.team}
+          onChange={onChange}
+          errorText={errors.team}
         />
         <br />
         <RaisedButton

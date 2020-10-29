@@ -5,9 +5,6 @@ const FormValidators = require("./validate");
 const validateSignUpForm = FormValidators.validateSignUpForm;
 const zxcvbn = require("zxcvbn");
 
-
-
-
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -20,11 +17,11 @@ class SignUp extends Component {
         password: "",
         repeatPassword: "",
         avatar: "",
-        team:"",
+        team: "",
       },
       btnTxt: "show",
       type: "password",
-      score: "0"
+      score: "0",
     };
 
     this.pwMask = this.pwMask.bind(this);
@@ -40,7 +37,7 @@ class SignUp extends Component {
     user[field] = event.target.value;
 
     this.setState({
-      user
+      user,
     });
   }
 
@@ -50,82 +47,72 @@ class SignUp extends Component {
     user[field] = event.target.value;
 
     this.setState({
-      user
+      user,
     });
 
     if (event.target.value === "") {
-      this.setState(state =>
+      this.setState((state) =>
         Object.assign({}, state, {
-          score: "null"
+          score: "null",
         })
       );
     } else {
       var pw = zxcvbn(event.target.value);
-      this.setState(state =>
+      this.setState((state) =>
         Object.assign({}, state, {
-          score: pw.score + 1
+          score: pw.score + 1,
         })
       );
     }
   }
 
+  submitSignup() {
+    const username = this.state.user.username;
+    const email = this.state.user.email;
+    const password = this.state.user.password;
+    const avatar = this.state.user.avatar;
+    const team = this.state.user.team;
 
-  submitSignup = (user) => {
-    // console.log(email)
-    user.preventDefault();
-    signup({username: user.usr,email: user.email, password: user.pw,avatar: user.av,team: user.te});
-    //   .then((user) => onLogIn(user))
-    //   .catch((e) => setError(e.response.data.message));
-  };
-//   submitSignup(user) {
-//     var params = { username: user.usr, password: user.pw, email: user.email };
-//     axios
-//       .post("https://ouramazingserver.com/api/signup/submit", params)
-//       .then(res => {
-//         if (res.data.success === true) {
-//           localStorage.token = res.data.token;
-//           localStorage.isAuthenticated = true;
-//           window.location.reload();
-//         } else {
-//           this.setState({
-//             errors: { message: res.data.message }
-//           });
-//         }
-//       })
-//       .catch(err => {
-//         console.log("Sign up data submit error: ", err);
-//       });
-//   }
+    signup(username, email, password, avatar, team)
+      .then((res) => {
+        alert(res.json().data);
+        if (res.data.success === true) {
+          console.log("success");
+          localStorage.token = res.data.token;
+          localStorage.isAuthenticated = true;
+          window.location.assign("/login");
+        } else {
+          this.setState({
+            errors: { message: res.data.message },
+          });
+        }
+      })
+      .catch((err) => {
+        console.log("Sign up data submit error: ", err);
+      });
+  }
 
   validateForm(event) {
     event.preventDefault();
     var payload = validateSignUpForm(this.state.user);
     if (payload.success) {
       this.setState({
-        errors: {}
+        errors: {},
       });
-      var user = {
-        usr: this.state.user.username,
-        pw: this.state.user.password,
-        av: this.state.user.avatar,
-        te: this.state.user.team,
-        email: this.state.user.email
-      };
-      this.submitSignup(user);
     } else {
       const errors = payload.errors;
       this.setState({
-        errors
+        errors,
       });
     }
   }
 
   pwMask(event) {
     event.preventDefault();
-    this.setState(state =>
+    this.setState((state) =>
       Object.assign({}, state, {
         type: this.state.type === "password" ? "input" : "password",
-        btnTxt: this.state.btnTxt === "show" ? "hide" : "show"
+        btnTxt: this.state.btnTxt === "show" ? "hide" : "show",
       })
     );
   }
@@ -134,7 +121,7 @@ class SignUp extends Component {
     return (
       <div>
         <SignUpForm
-          onSubmit={this.validateForm}
+          onSubmit={(this.validateForm, this.submitSignup)}
           onChange={this.handleChange}
           onPwChange={this.pwHandleChange}
           errors={this.state.errors}

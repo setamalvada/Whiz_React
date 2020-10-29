@@ -6,76 +6,64 @@ import SignUp from "./components/sign-up/SignUp";
 import Header from "./components/header/Header";
 import Map from "./components/map/Map";
 import TeamsStats from "./components/teams/TeamsStats";
-import AuthenticatedRoute from "./components/aunthenticated-route/AuthenticatedRoute";
+import AuthenticatedRoute, { NotAuthenticatedRoute } from './components/aunthenticated-route/AuthenticatedRoute';
 import PurpleList from "./components/teams/TeamPurple";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import YellowList from "./components/teams/TeamYellow";
+import Home from "./components/home/Home";
+import {useAuthContext} from "./contexts/AuthContext"
 
 
 // import ProductList from "./components/product-list/ProductList";
 
 function App() {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const {user} = useAuthContext();
 
-  const onLogIn = (loggedInUser) => {
-    localStorage.setItem("user", JSON.stringify(loggedInUser));
-    setUser(loggedInUser);
-  };
-
-  const onSignUp = (notRegisteredUser) => {
-    localStorage.setItem("user", JSON.stringify(notRegisteredUser));
-    setUser(notRegisteredUser);
-  };
-
-  const onLogOut = () => {
-    localStorage.removeItem("user");
-    setUser(undefined);
-  };
+  console.log(user)
+ 
 
   return (
     <div className="App">
-      <Header user={user} onLogOut={onLogOut} />
+      <Header />
       <div className="App__screenWrapper">
         <Switch>
+        <Route
+            exact path="/"
+            component={Home}
+            
+          />
           <AuthenticatedRoute
             path="/team/general"
-            render={(props) => <TeamsStats {...props} user={user} onLogOut={onLogOut} />}
-            user={user}
+            component={TeamsStats}
           />
 
           <AuthenticatedRoute
             path="/team/yellow"
-            render={(props) => <YellowList {...props} user={user} onLogOut={onLogOut} />}
-            user={user}
+            component={YellowList}
           />
 
           <AuthenticatedRoute
             path="/team/purple"
-            render={(props) => <PurpleList {...props} user={user} onLogOut={onLogOut} />}
-            user={user}
+            component={PurpleList}
           />
-           {/* <AuthenticatedRoute
-            path="/map"
-            render={(props) => <Map {...props} user={user} onLogOut={onLogOut} />}
-            user={user}
-          /> */}
-          <Route
+        
+          <NotAuthenticatedRoute
             path="/login"
-            render={(props) => (
-              <Login {...props} user={user} onLogIn={onLogIn} />
-            )}
+            component={Login}
+            
           />
-           <Route 
+
+          
+           <AuthenticatedRoute 
         path="/map"
-       component={Map}
+       component={() => <Map user={user}/> }
+       
           />
          
           <MuiThemeProvider>
-          <Route
+          <NotAuthenticatedRoute
             path="/signup"
-            render={(props) => (
-              <SignUp {...props} user={user} onSignUp={onSignUp} />
-            )}
+            component={SignUp}
           />
           </MuiThemeProvider>
        

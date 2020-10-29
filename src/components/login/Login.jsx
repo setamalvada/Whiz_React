@@ -1,45 +1,130 @@
-//import "./Login.css";
 import React, { useState } from "react";
-import InputWithLabel from "./input-with-label/InputWhithLabel";
-import { login } from "../../services/api.service";
 import { Redirect } from "react-router-dom";
+import { useAuthContext } from "../../contexts/AuthContext";
+import { login } from "../../services/api.service";
 
-export default function Login({ user, onLogIn }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+const validations = {
+  email: (v) => v.length,
+  password: (v) => v.length,
+};
 
-  const onSubmit = (e) => {
-    console.log(email)
-    e.preventDefault();
-    login(email, password)
-      .then((user) => onLogIn(user))
-      .catch((e) => setError(e.response.data.message));
+const Login = () => {
+  const [state, setState] = useState({
+    data: {
+      email: "",
+      password: "",
+    },
+    error: {
+      email: true,
+      password: true,
+    },
+    touch: {},
+  });
+
+  const [loginError, setLoginError] = useState(null);
+
+  const authContext = useAuthContext();
+
+  const { data, error, touch } = state;
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const user = await login(data);
+
+      authContext.login(user);
+    } catch (err) {
+      setLoginError(err.response?.data?.message);
+    }
   };
 
-  if (user) {
-    return <Redirect to="/map" />;
-  }
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    const validationFn = validations[name];
+    const isValid = validationFn(value);
+
+    setState((prev) => {
+      return {
+        ...prev,
+        data: {
+          ...prev.data,
+          [name]: value,
+        },
+        error: {
+          ...prev.error,
+          [name]: !isValid,
+        },
+      };
+    });
+  };
+
+  const handleBlur = (event) => {
+    const { name } = event.target;
+
+    setState((prev) => {
+      return {
+        ...prev,
+        touch: {
+          ...touch,
+          [name]: true,
+        },
+      };
+    });
+  };
+
+  const isError = Object.values(error).some((err) => err);
 
   return (
-    <div className="Login">
-      <div>Whiz </div>
-      {error && <p>There was an error: {error}</p>}
-      <form onSubmit={onSubmit}>
-        <InputWithLabel
-          value={email}
-          label="email"
-          onChange={(e) => setEmail(e.target.value)}
-          type="email"
-        />
-        <InputWithLabel
-          value={password}
-          label="password"
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-        />
-        <button type="submit">Log in</button>
-      </form>
+    <div className="row">
+      <div className="col">
+        {loginError && <div className="alert alert-danger">{loginError}</div>}
+
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">Email</label>
+
+            <input
+              value={data.email}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              name="email"
+              type="text"
+              className={`form-control ${
+                touch.email && error.email ? "is-invalid" : ""
+              }`}
+              placeholder="Enter email"
+            />
+
+            <div className="invalid-feedback">email is wrong</div>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="tagline">password</label>
+
+            <input
+              name="password"
+              value={data.password}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              type="password"
+              className={`form-control ${
+                touch.password && error.password ? "is-invalid" : ""
+              }`}
+              placeholder="Enter password"
+            />
+
+            <div className="invalid-feedback">error</div>
+          </div>
+
+          <button type="submit" className="btn btn-primary" disabled={isError}>
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
-}
+};
+
+export default Login;
