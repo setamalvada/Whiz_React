@@ -11,6 +11,8 @@ const http = axios.create({
 
 export const login = ({ email, password }) => http.post('/login', { email, password }).then((res) => res.data);
 
+export const logout = () => http.post('/logout')
+
 export const signup = (username,email, password,avatar,team) => {
     return axios.post("/signup", { username,email, password,avatar,team }).then((res) => res.data);
   };
@@ -39,6 +41,14 @@ export const signup = (username,email, password,avatar,team) => {
     return axios.patch(`/map/${id}`).then((res) => res.data);
   }
   
+
+  export const profile = (id) => {
+    return axios.get(`/user/${id}`).then((res) => res.data);
+  };
+
+  export const chageProfile = (id) => {
+    return axios.get(`/user/${id}`).then((res) => res.data);
+  };
   
 
 //   submitSignup(user) {

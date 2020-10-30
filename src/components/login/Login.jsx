@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { login } from "../../services/api.service";
+import "./login.css";
 
 const validations = {
   email: (v) => v.length,
@@ -75,13 +76,14 @@ const Login = () => {
   };
 
   const isError = Object.values(error).some((err) => err);
-
+  // type="password"
   return (
-    <div className="row">
+    <div className="vertical-center">
+    
       <div className="col">
         {loginError && <div className="alert alert-danger">{loginError}</div>}
-
-        <form onSubmit={handleSubmit}>
+        <p className="navbar-brand maze">WHIZ</p>
+        <form class="align-self-center" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Email</label>
 
@@ -97,7 +99,7 @@ const Login = () => {
               placeholder="Enter email"
             />
 
-            <div className="invalid-feedback">email is wrong</div>
+            <div className="invalid-feedback">Wrong E-mail</div>
           </div>
 
           <div className="form-group">
@@ -115,10 +117,10 @@ const Login = () => {
               placeholder="Enter password"
             />
 
-            <div className="invalid-feedback">error</div>
+            <div className="invalid-feedback">Error</div>
           </div>
-
-          <button type="submit" className="btn btn-primary" disabled={isError}>
+              
+          <button type="submit" className="myButton" disabled={isError}>
             Submit
           </button>
         </form>

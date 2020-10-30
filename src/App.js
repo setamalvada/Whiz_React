@@ -12,6 +12,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import YellowList from "./components/teams/TeamYellow";
 import Home from "./components/home/Home";
 import {useAuthContext} from "./contexts/AuthContext"
+import UserProfile from "./components/user/UserProfile";
 
 
 // import ProductList from "./components/product-list/ProductList";
@@ -45,6 +46,12 @@ function App() {
           <AuthenticatedRoute
             path="/team/purple"
             component={PurpleList}
+          />
+
+
+        <AuthenticatedRoute
+            path="/user/:id"
+            component={UserProfile}
           />
         
           <NotAuthenticatedRoute
