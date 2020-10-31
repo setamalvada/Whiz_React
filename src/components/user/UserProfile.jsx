@@ -21,21 +21,23 @@ class UserProfile extends React.Component {
       this.setState({ user: response.data });
     });
   }
-
+ 
   render() {
     const user = this.state.user;
-    console.log(user.team);
+    console.log(user);
     return (
-      <div className="UserCard">
-        <div
-          className="User__image"
-          style={{ backgroundImage: `url(${user.avatar})` }}
-        />
-        <div className="User__name">{user.username}</div>
-        <div className="User__price">{user.counter} places conquered</div>
-        <div className="User__user">{user.team}</div>
-        {/* <button className="User__button">Edit profile</button> */}
-      </div>
+      <p>Hola</p>
+
+      // <div className="UserCard">
+      //   <div
+      //     className="User__image"
+      //     style={{ backgroundImage: `url(${user.avatar})` }}
+      //   />
+      //   <div className="User__name">{user.username}</div>
+      //   <div className="User__price">{user.counter} places conquered</div>
+      //   <div className="User__user">{user.team}</div>
+      //   {/* <button className="User__button">Edit profile</button> */}
+      // </div>
     );
   }
 }

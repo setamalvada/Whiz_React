@@ -10,3 +10,8 @@
   position: absolute;
   z-index: 20;
 }
+
+.logo {
+  font-family: titleFont;
+  color:white;
+}

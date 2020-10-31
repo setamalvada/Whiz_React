@@ -3,7 +3,7 @@
   src: url(/src/);
 }
 
-h1 {
+.typeH1{
   display: inline-block;
   position: relative;
   font-family: titleFont;
@@ -13,7 +13,7 @@ h1 {
   /* overflow: hidden; */
 }
 
-h1::after {
+.typeH1::after {
   box-sizing: border-box;
   content: "";
   position: absolute;
@@ -27,7 +27,7 @@ h1::after {
   animation: cursor 0.5s linear infinite, typing 3s steps(13) forwards 1;
 }
 
-h2 {
+.typeH2 {
   display: inline-block;
   position: relative;
   font-family: titleFont;
@@ -37,7 +37,7 @@ h2 {
   /* overflow: hidden; */
 }
 
-h2::after {
+.typeH2::after {
   box-sizing: border-box;
   content: "";
   position: absolute;

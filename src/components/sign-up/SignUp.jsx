@@ -1,5 +1,6 @@
 import { signup } from "../../services/api.service";
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import SignUpForm from "./SignUpForm.jsx";
 const FormValidators = require("./validate");
 const validateSignUpForm = FormValidators.validateSignUpForm;
@@ -22,6 +23,7 @@ class SignUp extends Component {
       btnTxt: "show",
       type: "password",
       score: "0",
+      redirect: false,
     };
 
     this.pwMask = this.pwMask.bind(this);
@@ -66,7 +68,8 @@ class SignUp extends Component {
     }
   }
 
-  submitSignup() {
+  submitSignup(e) {
+    e.preventDefault();
     const username = this.state.user.username;
     const email = this.state.user.email;
     const password = this.state.user.password;
@@ -75,21 +78,21 @@ class SignUp extends Component {
 
     signup(username, email, password, avatar, team)
       .then((res) => {
-        alert(res.json().data);
-        if (res.data.success === true) {
+        if (res.success === true) {
           console.log("success");
           localStorage.token = res.data.token;
           localStorage.isAuthenticated = true;
           window.location.assign("/login");
         } else {
           this.setState({
-            errors: { message: res.data.message },
+            errors: { message: res.message },
           });
         }
       })
       .catch((err) => {
         console.log("Sign up data submit error: ", err);
       });
+    this.props.history.push('/login');
   }
 
   validateForm(event) {
@@ -118,6 +121,10 @@ class SignUp extends Component {
   }
 
   render() {
+    // const { redirect } = this.state;
+    // if (redirect) {
+    //   return <Redirect to="/login" />;
+    // }
     return (
       <div>
         <SignUpForm
@@ -136,4 +143,4 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+export default withRouter(SignUp);

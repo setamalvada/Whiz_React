@@ -60,7 +60,7 @@ class Map extends Component {
 
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: "mapbox://styles/clara92r/ckgdeck3q07xt19lecaxpc9tv",
+      style: "mapbox://styles/clara92r/ckgy5z1rk61nj1an2jvrcwhyx",
       center: [this.state.map.longitude, this.state.map.latitude],
       zoom: this.state.map.zoom,
       bearing: this.state.map.bearing,
@@ -83,6 +83,10 @@ class Map extends Component {
       currentMarkers = [];
       currentMarkers.push(currentPosition);
 
+      console.log(currentPosition);
+
+      this.checkMarkers(currentPosition._lngLat);
+
       let currentPlaces = [];
     }
 
@@ -95,12 +99,11 @@ class Map extends Component {
     listPlaces()
       .then((response) => {
         const responseMarkers = [];
-        const lngLat = currentPosition.getLngLat();
         response.forEach((e) => {
           let color =
-            e.owner == "yellow"
+            e.owner === "yellow"
               ? "yellow"
-              : e.owner == "purple"
+              : e.owner === "purple"
               ? "purple"
               : "grey";
 
@@ -109,7 +112,7 @@ class Map extends Component {
             .addTo(this.map);
 
           responseMarkers.push(place);
-          // console.log(currentPlaces)
+          const lngLat = currentPosition.getLngLat();
           let radius =
             distance(
               lngLat.lat,
@@ -119,7 +122,8 @@ class Map extends Component {
               "K"
             ) * 1000;
         });
-        this.setState({ places: response, markers: currentMarkers });
+        console.log(responseMarkers);
+        this.setState({ places: response, markers: responseMarkers });
       })
       .catch((error) => {
         console.log(error);
@@ -127,26 +131,74 @@ class Map extends Component {
   }
 
   checkMarkers = (currentPosition) => {
-    const distMin = 5;
+    const distMin = 20;
 
     if (this.state.places.length && this.state.markers.length) {
       const placesToUPdate = [];
       this.state.places.forEach((place) => {
         let currentDistance =
           distance(
-            place.location.coordinates[1].lat,
-            place.location.coordinates[0].lng,
+            place.location.coordinates[1],
+            place.location.coordinates[0],
             currentPosition.lat,
             currentPosition.lng,
             "K"
           ) * 1000;
 
+        console.log(currentDistance);
         if (currentDistance < distMin && place.owner !== this.props.user.team) {
-          placesToUPdate.push(() => conquer(place.id));
+          placesToUPdate.push(conquer(place.id));
         }
       });
 
-      Promise.all(placesToUPdate).then();
+      Promise.all(placesToUPdate).then((ids) => {
+        let newArrayState = [...this.state.markers];
+        let newArrayPlaces = [...this.state.places];
+        ids.forEach((id) => {
+          const updatedPlace = this.state.places.find((p) => {
+            return p.id === id;
+          });
+
+          const updatedPlaces = newArrayPlaces.filter((p) => {
+            return p.id === id;
+          });
+
+          updatedPlace.owner = this.props.user.team;
+
+          const updatedMarker = this.state.markers.find((m) => {
+            return (
+              m._lngLat.lng === updatedPlace.location.coordinates[0] &&
+              m._lngLat.lat === updatedPlace.location.coordinates[1]
+            );
+          });
+
+          if (updatedMarker) {
+            updatedMarker.remove();
+            let color = this.props.user.team === "yellow" ? "yellow" : "purple";
+
+            const newMarker = new mapboxgl.Marker({ color: color })
+              .setLngLat([
+                updatedPlace.location.coordinates[0],
+                updatedPlace.location.coordinates[1],
+              ])
+              .addTo(this.map);
+
+            const updatedMarkers = newArrayState.filter((marker) => {
+              return (
+                marker._lngLat.lng !== updatedPlace.location.coordinates[0] ||
+                marker._lngLat.lat !== updatedPlace.location.coordinates[1]
+              );
+            });
+
+            this.setState({ markers: [...updatedMarkers, newMarker] });
+
+            newArrayState = [...updatedMarkers, newMarker];
+
+            newArrayPlaces = [...updatedPlaces, updatedPlace];
+          }
+        });
+        this.setState({ markers: newArrayState, places: newArrayPlaces });
+      });
     }
   };
 

@@ -22,8 +22,10 @@ function App() {
 
   console.log(user)
  
-
+if(user){
   return (
+
+    
     <div className="App">
       <Header />
       <div className="App__screenWrapper">
@@ -49,8 +51,9 @@ function App() {
           />
 
 
+
         <AuthenticatedRoute
-            path="/user/:id"
+            path={`/user/${user.id}`}
             component={UserProfile}
           />
         
@@ -77,6 +80,62 @@ function App() {
         </Switch>
       </div>
     </div>
+  
   );
+}else{
+  return(
+  <div className="App">
+  <Header />
+  <div className="App__screenWrapper">
+    <Switch>
+    <Route
+        exact path="/"
+        component={Home}
+        
+      />
+      <AuthenticatedRoute
+        path="/team/general"
+        component={TeamsStats}
+      />
+
+      <AuthenticatedRoute
+        path="/team/yellow"
+        component={YellowList}
+      />
+
+      <AuthenticatedRoute
+        path="/team/purple"
+        component={PurpleList}
+      />
+
+
+
+    
+      <NotAuthenticatedRoute
+        path="/login"
+        component={Login}
+        
+      />
+
+      
+       <AuthenticatedRoute 
+    path="/map"
+   component={() => <Map user={user}/> }
+   
+      />
+     
+      <MuiThemeProvider>
+      <NotAuthenticatedRoute
+        path="/signup"
+        component={SignUp}
+      />
+      </MuiThemeProvider>
+   
+    </Switch>
+  </div>
+</div>
+)
 }
+}
+
 export default App;

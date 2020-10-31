@@ -78,14 +78,13 @@ const Login = () => {
   const isError = Object.values(error).some((err) => err);
   // type="password"
   return (
-    <div className="vertical-center">
-    
+    <div className="vertical-center box">
       <div className="col">
         {loginError && <div className="alert alert-danger">{loginError}</div>}
-        <p className="navbar-brand maze">WHIZ</p>
-        <form class="align-self-center" onSubmit={handleSubmit}>
+       
+        <form class="inner" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="name">Email</label>
+            
 
             <input
               value={data.email}
@@ -95,15 +94,15 @@ const Login = () => {
               type="text"
               className={`form-control ${
                 touch.email && error.email ? "is-invalid" : ""
-              }`}
+              }`,"form-control"}
               placeholder="Enter email"
             />
 
-            <div className="invalid-feedback">Wrong E-mail</div>
+            <div className="invalid-feedback">Error</div>
           </div>
 
           <div className="form-group">
-            <label htmlFor="tagline">password</label>
+            
 
             <input
               name="password"
@@ -113,13 +112,13 @@ const Login = () => {
               type="password"
               className={`form-control ${
                 touch.password && error.password ? "is-invalid" : ""
-              }`}
+              }`,"form-control"}
               placeholder="Enter password"
             />
 
             <div className="invalid-feedback">Error</div>
           </div>
-              
+
           <button type="submit" className="myButton" disabled={isError}>
             Submit
           </button>

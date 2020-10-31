@@ -25,7 +25,7 @@ const SignUpForm = ({
 }) => {
   return (
     <div className="loginBox">
-      <h1>Sign Up</h1>
+      <h4>Sign Up</h4>
       {errors.message && <p style={{ color: "red" }}>{errors.message}</p>}
 
       <form onSubmit={onSubmit}>
@@ -99,14 +99,11 @@ const SignUpForm = ({
           errorText={errors.team}
         />
         <br />
-        <RaisedButton
-          className="signUpSubmit"
-          primary={true}
-          type="submit"
-          label="submit"
-        />
-        {/* <button type="submit">Submit</button> */}
+        <br />
+       
+        <button className="myButton" type="submit">Submit</button>
       </form>
+      <br />
       <p>
         Aleady have an account? <br />
         <a href="/login">Log in here</a>
