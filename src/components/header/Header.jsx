@@ -92,7 +92,7 @@ const Header = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-white" to="./team/general">
+              <Link className="nav-link text-white" to="/team/general">
                 Stats
               </Link>
             </li>

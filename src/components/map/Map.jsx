@@ -83,16 +83,12 @@ class Map extends Component {
       currentMarkers = [];
       currentMarkers.push(currentPosition);
 
-      console.log(currentPosition);
-
       this.checkMarkers(currentPosition._lngLat);
 
       let currentPlaces = [];
     }
 
-    // setInterval(
     navigator.geolocation.watchPosition(success.bind(this), errorPos, options);
-    // ,3000)
 
     console.log(this.props.user);
 
@@ -112,17 +108,7 @@ class Map extends Component {
             .addTo(this.map);
 
           responseMarkers.push(place);
-          const lngLat = currentPosition.getLngLat();
-          let radius =
-            distance(
-              lngLat.lat,
-              lngLat.lng,
-              place.getLngLat().lat,
-              place.getLngLat().lng,
-              "K"
-            ) * 1000;
         });
-        console.log(responseMarkers);
         this.setState({ places: response, markers: responseMarkers });
       })
       .catch((error) => {
@@ -131,7 +117,7 @@ class Map extends Component {
   }
 
   checkMarkers = (currentPosition) => {
-    const distMin = 20;
+    const distMin = 30;
 
     if (this.state.places.length && this.state.markers.length) {
       const placesToUPdate = [];
@@ -145,7 +131,6 @@ class Map extends Component {
             "K"
           ) * 1000;
 
-        console.log(currentDistance);
         if (currentDistance < distMin && place.owner !== this.props.user.team) {
           placesToUPdate.push(conquer(place.id));
         }
@@ -154,7 +139,9 @@ class Map extends Component {
       Promise.all(placesToUPdate).then((ids) => {
         let newArrayState = [...this.state.markers];
         let newArrayPlaces = [...this.state.places];
+
         ids.forEach((id) => {
+          // debugger;
           const updatedPlace = this.state.places.find((p) => {
             return p.id === id;
           });
@@ -163,38 +150,41 @@ class Map extends Component {
             return p.id === id;
           });
 
-          updatedPlace.owner = this.props.user.team;
+          if (updatedPlace) {
+            updatedPlace.owner = this.props.user.team;
 
-          const updatedMarker = this.state.markers.find((m) => {
-            return (
-              m._lngLat.lng === updatedPlace.location.coordinates[0] &&
-              m._lngLat.lat === updatedPlace.location.coordinates[1]
-            );
-          });
-
-          if (updatedMarker) {
-            updatedMarker.remove();
-            let color = this.props.user.team === "yellow" ? "yellow" : "purple";
-
-            const newMarker = new mapboxgl.Marker({ color: color })
-              .setLngLat([
-                updatedPlace.location.coordinates[0],
-                updatedPlace.location.coordinates[1],
-              ])
-              .addTo(this.map);
-
-            const updatedMarkers = newArrayState.filter((marker) => {
+            const updatedMarker = this.state.markers.find((m) => {
               return (
-                marker._lngLat.lng !== updatedPlace.location.coordinates[0] ||
-                marker._lngLat.lat !== updatedPlace.location.coordinates[1]
+                m._lngLat.lng === updatedPlace.location.coordinates[0] &&
+                m._lngLat.lat === updatedPlace.location.coordinates[1]
               );
             });
 
-            this.setState({ markers: [...updatedMarkers, newMarker] });
+            if (updatedMarker) {
+              updatedMarker.remove();
+              let color =
+                this.props.user.team === "yellow" ? "yellow" : "purple";
 
-            newArrayState = [...updatedMarkers, newMarker];
+              const newMarker = new mapboxgl.Marker({ color: color })
+                .setLngLat([
+                  updatedPlace.location.coordinates[0],
+                  updatedPlace.location.coordinates[1],
+                ])
+                .addTo(this.map);
 
-            newArrayPlaces = [...updatedPlaces, updatedPlace];
+              const updatedMarkers = newArrayState.filter((marker) => {
+                return (
+                  marker._lngLat.lng !== updatedPlace.location.coordinates[0] ||
+                  marker._lngLat.lat !== updatedPlace.location.coordinates[1]
+                );
+              });
+
+              this.setState({ markers: [...updatedMarkers, newMarker] });
+
+              newArrayState = [...updatedMarkers, newMarker];
+
+              newArrayPlaces = [...updatedPlaces, updatedPlace];
+            }
           }
         });
         this.setState({ markers: newArrayState, places: newArrayPlaces });

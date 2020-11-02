@@ -100,8 +100,10 @@ const SignUpForm = ({
         />
         <br />
         <br />
-       
-        <button className="myButton" type="submit">Submit</button>
+
+        <button className="myButtonbig" type="submit">
+          Submit
+        </button>
       </form>
       <br />
       <p>

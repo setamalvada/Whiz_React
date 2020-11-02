@@ -1,0 +1,53 @@
+
+.myContainerProf{
+  margin: 30px;
+  background-color: white;
+
+}
+
+.titleProf{
+  padding: 20px;
+}
+
+.flex-containerProf {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: white;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 0px;
+  border-bottom: 1px solid red;
+}
+
+.teamcardProf {
+  width: 100%;
+  height: auto
+}
+
+.flex-containerProf > div {
+  background-color: #f1f1f1;
+   margin: 10px;
+  text-align: center;
+  font-size: 10px;
+  text-align: left;
+  padding: 5px;
+}
+
+.usernameProf {
+  font-size: 18px;
+  white-space: nowrap;
+  padding-top:20px
+}
+
+
+.nowrapProf {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.background-themeProf {
+    background-color: white;
+    margin: 30px;
+    padding: 20px;
+  }
+

@@ -53,7 +53,7 @@ if(user){
 
 
         <AuthenticatedRoute
-            path={`/user/${user.id}`}
+            path={"/user/:id"}
             component={UserProfile}
           />
         

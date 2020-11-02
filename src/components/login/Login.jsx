@@ -119,7 +119,7 @@ const Login = () => {
             <div className="invalid-feedback">Error</div>
           </div>
 
-          <button type="submit" className="myButton" disabled={isError}>
+          <button type="submit" className="myButtonbig" disabled={isError}>
             Submit
           </button>
         </form>

@@ -1,15 +1,30 @@
+.home {
+  background-image: url("./background.png");
+  width: 100%;
+  height: 100vh;
+}
+
+/* .home {
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+} */
+
+
+
 @font-face {
   font-family: titleFont;
   src: url(/src/);
 }
 
-.typeH1{
+.typeH1 {
   display: inline-block;
   position: relative;
   font-family: titleFont;
   font-size: 60px;
-  margin: 40px;
-  color: rgb(88, 3, 88);
+  margin: 60px;
+  color: red;
   /* overflow: hidden; */
 }
 
@@ -20,7 +35,7 @@
   width: 100%;
   height: 100%;
   /* background-color: transparent; */
-  background-color: rgb(36, 36, 36);
+  background-color: transparent;
   top: 0;
   right: 0;
   border-left: 0px solid tra;
@@ -32,8 +47,8 @@
   position: relative;
   font-family: titleFont;
   font-size: 30px;
-  margin: 40px;
-  color: yellow;
+  margin: 60px;
+  color: red;
   /* overflow: hidden; */
 }
 
@@ -44,7 +59,7 @@
   width: 100%;
   height: 100%;
   /* background-color: transparent; */
-  background-color: rgb(36, 36, 36);
+  background-color: transparent;
   top: 0;
   right: 0;
   border-left: 0px solid rgb(36, 36, 36);

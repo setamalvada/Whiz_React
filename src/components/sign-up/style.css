@@ -50,7 +50,7 @@ form {
   }
 }
 
-.myButton {
+.myButtonbig {
   box-shadow: inset 0px 1px 0px 0px #1c3247;
   background: linear-gradient(to bottom, #07151c 5%, #59656e 100%);
   background-color: #07151c;
@@ -65,7 +65,7 @@ form {
   text-decoration: none;
   text-shadow: 0px 1px 0px #393d42;
 }
-.myButton:hover {
+.myButtonbig:hover {
   background: linear-gradient(to bottom, #59656e 5%, #07151c 100%);
   background-color: #59656e;
 }
